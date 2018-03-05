@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SelectTagView">
+        <attr name="tagTextSize" format="integer"/>
+        <attr name="tagTextColor" format="reference"/>
+        <attr name="tagBgColor" format="reference"/>
+        <attr name="tagBgRes" format="reference"/>
+        <attr name="tagSelectType" format="enum">
+            <enum name="SINGLE" value="1"/>
+            <enum name="MORE" value="2"/>
+            <enum name="NORMAL" value="0"/>
+        </attr>
+    </declare-styleable>
+</resources>

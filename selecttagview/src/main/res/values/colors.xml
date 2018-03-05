@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="text_333"> #333</color>
+    <color name="text_666"> #666</color>
+    <color name="text_999"> #999</color>
+    <color name="color_main">#FF920B</color>
+    <color name="color_main_trans">#66FF920B</color>
+</resources>
