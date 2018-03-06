@@ -17,10 +17,9 @@ class SelectTagView : ViewGroup {
 
     private var textColor = 0 // tag字体颜色
 
-    private var backGroundColor = 0 // tag背景色
+    private var backGroundSelectRes = R.drawable.shape_selected
 
-    private var backGroundResource = 0 // tag背景布局
-
+    private var backGroundNoSelectRes = R.drawable.shape_no_select
     private var type = NORMAL_CLOUD_TYPE
 
     companion object {
@@ -40,8 +39,8 @@ class SelectTagView : ViewGroup {
         val attr = context.obtainStyledAttributes(attrs!!, R.styleable.SelectTagView, def, 0)
         textSize = attr.getInt(R.styleable.SelectTagView_tagTextSize, 8)
         textColor = attr.getResourceId(R.styleable.SelectTagView_tagTextColor, R.color.text_666)
-        backGroundColor = attr.getResourceId(R.styleable.SelectTagView_tagBgColor, android.R.color.white)
-        backGroundResource = attr.getResourceId(R.styleable.SelectTagView_tagBgColor, 0)
+        backGroundNoSelectRes = attr.getResourceId(R.styleable.SelectTagView_tagBgNoSelectRes, R.drawable.shape_no_select)
+        backGroundSelectRes = attr.getResourceId(R.styleable.SelectTagView_tagBgSelectRes, R.drawable.shape_selected)
         val xmlType= attr.getInt(R.styleable.SelectTagView_tagSelectType, 0)
         when (xmlType){
             0-> type= NORMAL_CLOUD_TYPE
@@ -96,8 +95,8 @@ class SelectTagView : ViewGroup {
                     it.layout(left, top, right, bottom)
                     // 通过view的tag来显示view的实际变化
                     val tag = it.tag as CateGroyBean
-                    if (tag.isChoose) it.setBackgroundResource(R.drawable.shape_selected)
-                    else it.setBackgroundResource(R.drawable.shape_no_select)
+                    if (tag.isChoose) it.setBackgroundResource(backGroundSelectRes)
+                    else it.setBackgroundResource(backGroundNoSelectRes)
                     //记录最终view的位置
                     pointWidth += layoutParams.leftMargin + childWidth + layoutParams.rightMargin
                 }
@@ -166,7 +165,6 @@ class SelectTagView : ViewGroup {
                 val textView = TextView(context)
                 textView.setTextColor(ContextCompat.getColor(context, textColor))
                 DimenUtil.getInstance(context).getSmallSize(textView)
-                textView.setBackgroundColor(ContextCompat.getColor(context, backGroundColor))
                 textView.tag = categoryBean
                 val layoutParams = MarginLayoutParams(ViewGroup.MarginLayoutParams.WRAP_CONTENT, ViewGroup.MarginLayoutParams.WRAP_CONTENT)
                 val margin = DimenUtil.getInstance(context).getWindowWidth() / 45
@@ -176,7 +174,7 @@ class SelectTagView : ViewGroup {
                 layoutParams.topMargin = margin
                 textView.layoutParams = layoutParams
                 textView.text = categoryBean.name
-                if (backGroundResource != 0) textView.setBackgroundResource(backGroundResource)
+                textView.setBackgroundResource(backGroundNoSelectRes)
                 textView.setPadding(margin * 2, margin, margin * 2, margin)
                 textView.setOnClickListener {
                     //通过数据绑定来控制显示
