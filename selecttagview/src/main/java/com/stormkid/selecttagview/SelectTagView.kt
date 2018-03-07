@@ -16,7 +16,7 @@ class SelectTagView : ViewGroup {
     private var textSize = 0 // tag字体大小
 
     private var textColor = 0 // tag字体颜色
-
+    private var textSelectColor = 0 // tag字体选择颜色
     private var backGroundSelectRes = R.drawable.shape_selected
 
     private var backGroundNoSelectRes = R.drawable.shape_no_select
@@ -41,11 +41,12 @@ class SelectTagView : ViewGroup {
         textColor = attr.getResourceId(R.styleable.SelectTagView_tagTextColor, R.color.text_666)
         backGroundNoSelectRes = attr.getResourceId(R.styleable.SelectTagView_tagBgNoSelectRes, R.drawable.shape_no_select)
         backGroundSelectRes = attr.getResourceId(R.styleable.SelectTagView_tagBgSelectRes, R.drawable.shape_selected)
-        val xmlType= attr.getInt(R.styleable.SelectTagView_tagSelectType, 0)
-        when (xmlType){
-            0-> type= NORMAL_CLOUD_TYPE
-            1-> type = SINGLE_SELECT_TYPE
-            2-> type = MORE_SELECT_TYPE
+        textSelectColor = attr.getResourceId(R.styleable.SelectTagView_tagTextSelectColor, textColor)
+        val xmlType = attr.getInt(R.styleable.SelectTagView_tagSelectType, 0)
+        when (xmlType) {
+            0 -> type = NORMAL_CLOUD_TYPE
+            1 -> type = SINGLE_SELECT_TYPE
+            2 -> type = MORE_SELECT_TYPE
         }
     }
 
@@ -60,7 +61,7 @@ class SelectTagView : ViewGroup {
     /**
      * 更新type是否为多选或单选或者只点击
      */
-    fun setType(type:String){
+    fun setType(type: String) {
         this.type = type
     }
 
@@ -94,9 +95,15 @@ class SelectTagView : ViewGroup {
                     val right = layoutParams.rightMargin + pointWidth + childWidth
                     it.layout(left, top, right, bottom)
                     // 通过view的tag来显示view的实际变化
+                    val view = it as TextView
                     val tag = it.tag as CateGroyBean
-                    if (tag.isChoose) it.setBackgroundResource(backGroundSelectRes)
-                    else it.setBackgroundResource(backGroundNoSelectRes)
+                    if (tag.isChoose) {
+                        it.setBackgroundResource(backGroundSelectRes)
+                        view.setTextColor(ContextCompat.getColor(context,textSelectColor))
+                    } else {
+                        it.setBackgroundResource(backGroundNoSelectRes)
+                        view.setTextColor(ContextCompat.getColor(context,textColor))
+                    }
                     //记录最终view的位置
                     pointWidth += layoutParams.leftMargin + childWidth + layoutParams.rightMargin
                 }
@@ -158,7 +165,7 @@ class SelectTagView : ViewGroup {
         }
     }
 
-    fun initChild(list: MutableList<CateGroyBean>,callbcak:(MutableList<CateGroyBean>)->Unit) = list.apply {
+    fun initChild(list: MutableList<CateGroyBean>, callbcak: (MutableList<CateGroyBean>) -> Unit) = list.apply {
         removeAllViews()
     }
             .forEachIndexed { position, categoryBean ->
@@ -178,26 +185,26 @@ class SelectTagView : ViewGroup {
                 textView.setPadding(margin * 2, margin, margin * 2, margin)
                 textView.setOnClickListener {
                     //通过数据绑定来控制显示
-                    when(type){
-                        SINGLE_SELECT_TYPE ->{ //单选
+                    when (type) {
+                        SINGLE_SELECT_TYPE -> { //单选
                             categoryBean.isChoose = !categoryBean.isChoose
                             it.tag = categoryBean
                             list.forEachIndexed { index, categaryBean ->
-                                if (position!=index){
+                                if (position != index) {
                                     categaryBean.isChoose = false
                                     getChildAt(index).tag = categaryBean
                                 }
                             }
                         }
-                        MORE_SELECT_TYPE ->{ // 多选
+                        MORE_SELECT_TYPE -> { // 多选
                             categoryBean.isChoose = !categoryBean.isChoose
                             it.tag = categoryBean
                         }
-                        NORMAL_CLOUD_TYPE ->{ //普通选定
+                        NORMAL_CLOUD_TYPE -> { //普通选定
                             categoryBean.isChoose = true
                             it.tag = categoryBean
                             list.forEachIndexed { index, categaryBean ->
-                                if (position!=index){
+                                if (position != index) {
                                     categaryBean.isChoose = false
                                     getChildAt(index).tag = categaryBean
                                 }
@@ -210,5 +217,5 @@ class SelectTagView : ViewGroup {
                 addView(textView)
             }
 
-    data class CateGroyBean(val id:String, val name:String, var isChoose:Boolean)
+    data class CateGroyBean(val id: String, val name: String, var isChoose: Boolean)
 }

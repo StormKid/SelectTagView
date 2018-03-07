@@ -3,6 +3,7 @@
     <declare-styleable name="SelectTagView">
         <attr name="tagTextSize" format="integer"/>
         <attr name="tagTextColor" format="reference"/>
+        <attr name="tagTextSelectColor" format="reference"/>
         <attr name="tagBgNoSelectRes" format="reference"/>
         <attr name="tagBgSelectRes" format="reference"/>
         <attr name="tagSelectType" format="enum">
