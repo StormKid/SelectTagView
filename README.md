@@ -17,7 +17,7 @@ maven :
 
 
 |  属性 | 类型 | 默认值 | 注释说明 |
-| --- | --- | --- | --- |
+| :-: | :-: | :-: | --- |
 |  tagTextSize   |   Integer  |  8   |  为计算后的字体大小，不推荐修改，并非px,dp计算，使用屏幕比例计算  |
 | tagTextColor    |   ColorRes  |  #666666   |   标签字体默认颜色   |
 | tagBgNoSelectRes    |  DrawableRes   |     |   标签非选择时的背景  |
