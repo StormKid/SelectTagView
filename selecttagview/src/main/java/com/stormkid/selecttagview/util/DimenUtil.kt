@@ -30,7 +30,10 @@ class DimenUtil private constructor(context: Context) {
 
     private object inner {
         val util = fun(context: Context): DimenUtil = DimenUtil(context)
-        val width = fun(context: Context): Int { return context.resources.displayMetrics.widthPixels }
+        val width = fun(context: Context): Int {
+            val width = context.resources.displayMetrics.widthPixels
+            val height = context.resources.displayMetrics.heightPixels
+            return if (width<height) width else height}
     }
 
 
