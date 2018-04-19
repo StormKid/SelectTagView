@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.stormkid.selecttagview.util.DimenUtil
+import java.io.Serializable
 
 /**
  * Created by ke_li on 2018/2/28.
@@ -217,5 +218,5 @@ class SelectTagView : ViewGroup {
                 addView(textView)
             }
 
-    data class CateGroyBean(val id: String, val name: String, var isChoose: Boolean)
+    data class CateGroyBean(val id: String, val name: String, var isChoose: Boolean):Serializable
 }
