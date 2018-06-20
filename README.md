@@ -25,6 +25,7 @@ maven :
 | tagSelectType    |   Enum  |  NORMAL   |  Enum 标签类型 分别为 ‘SINGLE -- 单选‘ ，’MORE -- 多选’ ，‘NORMAL’  -- 普通勾选   |
 | tagTextSelectColor    |  ColorRes   |  tagTextColor   |  标签字体选择的颜色   |
 
+
 ### 重要实现数据类：
 
 ```	
