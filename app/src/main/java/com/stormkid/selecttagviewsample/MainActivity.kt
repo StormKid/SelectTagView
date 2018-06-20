@@ -46,6 +46,7 @@ class MainActivity : AppCompatActivity() {
                     "1" -> value_list.setType(SelectTagView.NORMAL_CLOUD_TYPE)
                     "2" -> value_list.setType(SelectTagView.SINGLE_SELECT_TYPE)
                     "3" -> value_list.setType(SelectTagView.MORE_SELECT_TYPE)
+
                 }
             }
             value_list.initChild(value, {})
