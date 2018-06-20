@@ -4,7 +4,7 @@ buildscript {
     ext.kotlin_version = '1.2.+'
     ext.binaryUser = "stokid"
     ext.binaryApiKey = "b2cbe912397d9bdf2386ceda8e67f7de0b7f7859"
-    ext.my_version = "1.0.4"
+    ext.my_version = "1.0.5"
     repositories {
         google()
         jcenter()
