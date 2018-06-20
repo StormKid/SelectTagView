@@ -2,14 +2,14 @@
 ### 博客地址点击：https://www.jianshu.com/p/dfa662a7b07a
 **使用方法：**
 
-gradle ： ```compile 'com.stormKid:selecttagview:1.0.4'```
+gradle ： ```compile 'com.stormKid:selecttagview:1.0.5'```
 
 maven : 
 ```
 <dependency>
   <groupId>com.stormKid</groupId>
   <artifactId>selecttagview</artifactId>
-  <version>1.0.4</version>
+  <version>1.0.5</version>
   <type>pom</type>
 </dependency>
 ```
@@ -25,3 +25,10 @@ maven :
 | tagSelectType    |   Enum  |  NORMAL   |  Enum 标签类型 分别为 ‘SINGLE -- 单选‘ ，’MORE -- 多选’ ，‘NORMAL’  -- 普通勾选   |
 | tagTextSelectColor    |  ColorRes   |  tagTextColor   |  标签字体选择的颜色   |
 
+### 重要实现数据类：
+
+```
+	 data class CateGroyBean(override var id: String, override var name: String, override var isChoose: Boolean) : SupportEntity
+
+```
+**说明：SupportEntity为数据接口，用来实现数据交互和解耦，详细使用方法请参考sample**

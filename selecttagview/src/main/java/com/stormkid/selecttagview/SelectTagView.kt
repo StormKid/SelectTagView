@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.stormkid.selecttagview.util.DimenUtil
-import java.io.Serializable
+import com.stormkid.selecttagview.util.SupportEntity
 
 /**
  * Created by ke_li on 2018/2/28.
@@ -97,7 +97,7 @@ class SelectTagView : ViewGroup {
                     it.layout(left, top, right, bottom)
                     // 通过view的tag来显示view的实际变化
                     val view = it as TextView
-                    val tag = it.tag as CateGroyBean
+                    val tag = it.tag as SupportEntity
                     if (tag.isChoose) {
                         it.setBackgroundResource(backGroundSelectRes)
                         view.setTextColor(ContextCompat.getColor(context,textSelectColor))
@@ -166,10 +166,9 @@ class SelectTagView : ViewGroup {
         }
     }
 
-    fun initChild(list: MutableList<CateGroyBean>, callbcak: (MutableList<CateGroyBean>) -> Unit) = list.apply {
+    fun initChild(list: ArrayList<out SupportEntity>, callbcak: (ArrayList<out SupportEntity>) -> Unit) = list.apply {
         removeAllViews()
-    }
-            .forEachIndexed { position, categoryBean ->
+    }.forEachIndexed { position, categoryBean ->
                 val textView = TextView(context)
                 textView.setTextColor(ContextCompat.getColor(context, textColor))
                 DimenUtil.getInstance(context).getSmallSize(textView)
@@ -218,5 +217,4 @@ class SelectTagView : ViewGroup {
                 addView(textView)
             }
 
-    data class CateGroyBean(val id: String, val name: String, var isChoose: Boolean):Serializable
 }

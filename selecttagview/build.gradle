@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
 android {
     compileSdkVersion 26
 
@@ -10,7 +11,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 26
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.1"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -29,8 +30,95 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     api 'com.android.support:appcompat-v7:26.1.0'
-    api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    api "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 }
 repositories {
     mavenCentral()
+}
+
+def siteUrl = "https://github.com/StormKid/SelectTagView"
+def gitUrl = "https://github.com/StormKid/SelectTagView.git"
+group = "com.stormKid"
+version = my_version//发布版本号
+install{
+    repositories.mavenInstaller{
+        pom{
+            project{
+                packaging 'arr'
+                description 'a cloud tag view for using'
+                url siteUrl
+                // Set your license
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer { // 开发者信息
+                        id "com.stormKid.selecttagview"
+                        name 'stormKid'
+                        email 'stokid@126.com'
+                    }
+                }
+                scm {
+                    connection gitUrl
+                    developerConnection gitUrl
+                    url siteUrl
+                }
+            }
+        }
+
+    }
+}
+
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+task javadoc(type: Javadoc) {
+    failOnError false //必须添加以免出错
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+javadoc {
+    options{
+        encoding "UTF-8"
+        charSet 'UTF-8'
+        author true
+        version true
+        links "http://docs.oracle.com/javase/7/docs/api"
+    }
+}
+
+
+bintray {
+    user = binaryUser
+    key = binaryApiKey
+    pkg {
+        repo = 'library'//自己创建的仓库名字
+        name = 'SelectTagView'//上传到JCenter的名字,最终引用的名字
+        websiteUrl = siteUrl
+        vcsUrl = gitUrl
+        licenses = ['Apache-2.0']//不能随便写，只能是仓库创建时选择的license type
+        publish = true // 是否是公开项目，公开别人可以引用
+
+        version {
+            name = my_version
+            desc = 'a select cloud tag.'//描述，自己定义
+            released  = new Date()
+            vcsTag = "v$my_version"
+            attributes = ['gradle-plugin': 'com.use.less:com.use.less.gradle:gradle-useless-plugin']
+        }
+    }
+    configurations = ['archives']
 }
