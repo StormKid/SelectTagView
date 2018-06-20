@@ -27,8 +27,8 @@ maven :
 
 ### 重要实现数据类：
 
+```	
+data class CateGroyBean(override var id: String, override var name: String, override var isChoose: Boolean) : SupportEntity
 ```
-	 data class CateGroyBean(override var id: String, override var name: String, override var isChoose: Boolean) : SupportEntity
 
-```
 **说明：SupportEntity为数据接口，用来实现数据交互和解耦，详细使用方法请参考sample**
